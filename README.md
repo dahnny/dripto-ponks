@@ -1,5 +1,6 @@
-# Celo React Boilerplate
-This repository contains a simple React boilerplate for Celo projects.
+# Dripto Ponks
+This is an exciting project. It is a marketplace where users can mint their tokens and also sell it to other users. There are two separate contracts, one for minting and another for the marketplace. The marketplace has functions for creating an NFT and for buying the NFT. 
+Users set the attributes such as Background color, complexion and hair color. 
 
 ## 1. Tech Stack
 This boilerplate uses the following tech stack:
