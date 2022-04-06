@@ -19,11 +19,6 @@ To get this project up running locally, follow these simple steps:
 git clone https://github.com/dahnny/dripto-ponks.git
 ```
 
-### 2.2 Navigate to the directory:
-
-```bash
-cd celo-react-boilerplate
-```
 
 ### 2.3 Install the dependencies:
 
