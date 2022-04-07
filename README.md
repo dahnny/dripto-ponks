@@ -2,6 +2,8 @@
 This is an exciting project. It is a marketplace where users can mint their tokens and also sell it to other users. There are two separate contracts, one for minting and another for the marketplace. The marketplace has functions for creating an NFT and for buying the NFT. 
 Users set the attributes such as Background color, complexion and hair color. 
 
+Link: https://neon-panda-36c6bc.netlify.app/
+
 ## 1. Tech Stack
 This boilerplate uses the following tech stack:
 - [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
