@@ -25,7 +25,7 @@ ReactDOM.render(
       }}
       dapp={{
         name: "Dripto Ponks",
-        description: "A React Boilerplate for Celo Dapps",
+        description: "An NFT Marketplace",
       }}
     >
       <App />
