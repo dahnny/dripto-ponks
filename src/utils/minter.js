@@ -104,8 +104,7 @@ export const getNfts = async (minterContract, marketContract) => {
 export const fetchNftMeta = async (ipfsUrl) => {
   try {
     if (!ipfsUrl) return null;
-    const meta = await axios.get(ipfsUrl);
-    return meta;
+    return await axios.get(ipfsUrl);
   } catch (e) {
     console.log({ e });
   }
@@ -121,8 +120,7 @@ export const fetchNftOwner = async (minterContract, index) => {
 
 export const fetchNftContractOwner = async (minterContract) => {
   try {
-    let owner = await minterContract.methods.owner().call();
-    return owner;
+    return  await minterContract.methods.owner().call();
   } catch (e) {
     console.log({ e });
   }
@@ -135,16 +133,16 @@ export const buyNft = async (marketContract, performActions, index) => {
                 console.log(marketContract, index);
               const { defaultAccount } = kit;
               const listing = await marketContract.methods.getListing(index).call();
-        
+
               await marketContract.methods
                 .buyToken(index)
                 .send({ from: defaultAccount, value: listing.price });
             } catch (error) {
               console.log({ error });
             }
-          }); 
+          });
     } catch (error) {
-       console.log(error) 
+       console.log(error)
     }
-  
+
 };

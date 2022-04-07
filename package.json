@@ -1,6 +1,7 @@
 {
-  "name": "celo-react-boilerplate",
+  "name": "dripto-ponks",
   "version": "0.1.0",
+  "homepage": "https://Emmanuel-umeh.github.io/dripto-ponks",
   "private": true,
   "dependencies": {
     "@celo-tools/use-contractkit": "3.0.0-beta2",
@@ -32,7 +33,9 @@
     "eject": "react-scripts eject",
     "compile": "npx hardhat compile",
     "deploy": "npx hardhat run --network alfajores scripts/deploy.js",
-    "test-contract": "npx hardhat test"
+    "test-contract": "npx hardhat test",
+    "predeploy": "npm run build",
+    "deploy-prod": "npm run predeploy && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -58,6 +61,7 @@
     "chai": "^4.2.0",
     "ethereum-waffle": "^3.0.0",
     "ethers": "^5.0.0",
+    "gh-pages": "^3.2.3",
     "hardhat": "^2.8.2",
     "react-error-overlay": "^6.0.9"
   }

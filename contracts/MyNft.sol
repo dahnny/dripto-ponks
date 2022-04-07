@@ -12,7 +12,7 @@ contract MyNFT is ERC721, Ownable, ERC721Enumerable, ERC721URIStorage{
 
     Counters.Counter private _tokenIdCounter;
 
-	constructor() ERC721("Coolest NFT", "CNFT") {}
+	constructor() ERC721("DRIPTO PONKS", "DRPO") {}
 
     uint _tokenId = 0;
 
