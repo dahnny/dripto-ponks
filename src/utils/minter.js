@@ -87,6 +87,7 @@ export const getNfts = async (minterContract, marketContract) => {
           price: listing.price,
           sold: listing.sold,
           token: listing.token,
+          tokenId: listing.tokenId,
           name: meta.data.name,
           image: meta.data.image,
           description: meta.data.description,
@@ -128,23 +129,25 @@ export const fetchNftContractOwner = async (minterContract) => {
   }
 };
 
-export const buyNft = async (marketContract, performActions, index) => {
-    try {
-        await performActions(async (kit) => {
-            try {
-                console.log(marketContract, index);
-              const { defaultAccount } = kit;
-              const listing = await marketContract.methods.getListing(index).call();
-        
-              await marketContract.methods
-                .buyToken(index)
-                .send({ from: defaultAccount, value: listing.price });
-            } catch (error) {
-              console.log({ error });
-            }
-          }); 
-    } catch (error) {
-       console.log(error) 
-    }
-  
+export const buyNft = async (
+  marketContract,
+  performActions,
+  index,
+) => {
+  try {
+    await performActions(async (kit) => {
+      try {
+        console.log(marketContract, index);
+        const { defaultAccount } = kit;
+        const listing = await marketContract.methods.getListing(index).call();
+        await marketContract.methods
+          .buyToken(index)
+          .send({ from: defaultAccount, value: listing.price });
+      } catch (error) {
+        console.log({ error });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };

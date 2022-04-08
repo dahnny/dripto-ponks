@@ -5,6 +5,7 @@ import { Notification } from "./components/ui/Notifications";
 import Wallet from "./components/Wallet";
 import Cover from "./components/minter/Cover";
 import Nfts from "./components/minter/nfts";
+import { useEffect } from "react";
 import { useBalance, useMinterContract, useMarketContract } from "./hooks";
 import "./App.css";
 

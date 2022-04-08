@@ -40,7 +40,7 @@ contract MyNftMarket {
         return _listingId;
     }
 
-	function buyToken(uint listingId) external payable {
+	function buyToken(uint listingId) public payable {
 		Listing storage listing = _listings[listingId];
 
 		require(msg.value == listing.price, "Insufficient payment");
