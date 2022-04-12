@@ -38,9 +38,9 @@ export const createNft = async (
         .send({ from: defaultAccount });
       let tokenId = BigNumber.from(tx.events.Transfer.returnValues.tokenId);
 
-      await minterContract.methods
-        .approve(MyNFTMarketContractAddress.MyNFTMarket, tokenId)
-        .send({ from: defaultAccount });
+      // await minterContract.methods
+      //   .approve(MyNFTMarketContractAddress.MyNFTMarket, tokenId)
+      //   .send({ from: defaultAccount });
 
       const auctionPrice = ethers.utils.parseUnits(String(price), "ether");
       console.log(auctionPrice);
@@ -130,9 +130,11 @@ export const fetchNftContractOwner = async (minterContract) => {
 };
 
 export const buyNft = async (
+  minterContract,
   marketContract,
   performActions,
   index,
+  tokenId
 ) => {
   try {
     await performActions(async (kit) => {
@@ -143,6 +145,7 @@ export const buyNft = async (
         await marketContract.methods
           .buyToken(index)
           .send({ from: defaultAccount, value: listing.price });
+        await minterContract.methods.resaleApproval(tokenId).send({from: defaultAccount})
       } catch (error) {
         console.log({ error });
       }

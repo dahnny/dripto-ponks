@@ -20,19 +20,21 @@ describe("MyNFT", function () {
     market = await MyNftMarket.deploy();
     await market.deployed();
 
-    myNFT = await MyNFT.deploy();
+    myNFT = await MyNFT.deploy(market.address);
     await myNFT.deployed();
 
-    const auctionPrice = ethers.utils.parseUnits("10", "ether");
+    const auctionPrice = ethers.utils.parseUnits("1", "ether");
 
     const nftContractAddress = myNFT.address;
     const transaction = await myNFT.mint("https://example.com/1");
-    await myNFT.approve(market.address, 1);
+    // await myNFT.approve(market.address, 1);
     await market.listToken(nftContractAddress, 1, auctionPrice);
     const tx = await transaction.wait();
-    console.log(tx.events[0].args[2]);
+  const tokenId =  tx.events[0].args[2].toNumber();
 
-    await market.buyToken(0, { value: auctionPrice });
+    await market.connect(acc1).buyToken(0, { value: auctionPrice });
+    const t = await myNFT.connect(acc1).resaleApproval(tokenId);
+    await market.connect(acc2).buyToken(0, { value: auctionPrice });
 
     const listingLength = await market.getListingLength();
 

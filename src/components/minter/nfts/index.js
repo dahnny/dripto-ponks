@@ -47,13 +47,15 @@ const NftList = ({ minterContract, marketContract, name }) => {
     }
   };
 
-  const buyToken = async (index) => {
+  const buyToken = async (index, tokenId) => {
     try {
       setLoading(true);
       await buyNft(
+        minterContract,
         marketContract,
         performActions,
-        index
+        index,
+        tokenId
       );
       toast(<NotificationSuccess text="Updating NFT list...." />);
       getAssets();
@@ -97,7 +99,7 @@ const NftList = ({ minterContract, marketContract, name }) => {
               {nfts.map((_nft) => (
                 <Nft
                   key={_nft.index}
-                  buyNft={() => buyToken(_nft.index)}
+                  buyNft={() => buyToken(_nft.index, _nft.tokenId)}
                   nft={{
                     ..._nft,
                   }}

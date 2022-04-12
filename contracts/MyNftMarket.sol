@@ -21,7 +21,7 @@ contract MyNftMarket {
 
 		Listing memory listing = Listing(
 			payable(msg.sender),
-            payable(address(0)),
+            payable(address(this)),
 			token,
 			tokenId,
 			price,
@@ -45,12 +45,13 @@ contract MyNftMarket {
 
 		require(msg.value == listing.price, "Insufficient payment");
 
-		IERC721(listing.token).transferFrom(address(this), msg.sender, listing.tokenId);
+		IERC721(listing.token).transferFrom(listing.owner, msg.sender, listing.tokenId);
 		payable(listing.seller).transfer(msg.value);
 
         listing.sold = true;
         listing.price = listing.price * 2;
         listing.owner = payable(msg.sender);
+		listing.seller = payable(msg.sender);
 
 	}
 }
