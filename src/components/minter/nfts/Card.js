@@ -10,7 +10,7 @@ const NftCard = ({ nft, buyNft }) => {
   const { contractOwner, price, image, description, name, index, attributes } = nft;
   return (
     <Col key={index}>
-      <Card className=" h-100">
+      <Card className="h-100" id={"nft-card"}>
         <Card.Header>
           <Stack direction="horizontal" gap={2}>
             <Identicon address={contractOwner} size={28} />
@@ -50,7 +50,7 @@ const NftCard = ({ nft, buyNft }) => {
             </Row>
           </div>
           <div className="d-flex m-2 justify-content-center">
-              <button onClick={buyNft} className="btn btn-primary">Buy</button>
+              <button onClick={buyNft} className="btn btn-primary" id={"buy-button"}>Buy</button>
           </div>
         </Card.Body>
       </Card>
