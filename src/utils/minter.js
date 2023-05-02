@@ -1,16 +1,23 @@
-import { create as ipfsHttpClient } from "ipfs-http-client";
+import {create} from "ipfs-http-client";
 import axios from "axios";
-import MyNFTMarketContractAddress from "../contracts/MyNFTMarket-address.json";
 import MyNFTContractAddress from "../contracts/MyNFT-address.json";
 import { BigNumber, ethers } from "ethers";
 
-const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
+const authorization =
+    "Basic " +
+    Buffer.from(
+        process.env.REACT_APP_PROJECT_ID +
+        ":" +
+        process.env.REACT_APP_PROJECT_SECRET
+    ).toString("base64");
+
+const client = create({ url: "https://ipfs.infura.io:5001/api/v0", headers: { authorization } });
 
 export const createNft = async (
   minterContract,
   marketContract,
   performActions,
-  { name, price, description, ipfsImage, ownerAddress, attributes }
+  { name, price, description, ipfsImage, attributes }
 ) => {
   await performActions(async (kit) => {
     if (!name || !description || !ipfsImage) return;
@@ -30,7 +37,7 @@ export const createNft = async (
       const added = await client.add(data);
 
       // IPFS url for uploaded metadata
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const url = `https://diac.ipfs.infura.io/ipfs/${added.path}`;
 
       // mint the NFT and save the IPFS url to the blockchain
       let tx = await minterContract.methods
@@ -38,12 +45,7 @@ export const createNft = async (
         .send({ from: defaultAccount });
       let tokenId = BigNumber.from(tx.events.Transfer.returnValues.tokenId);
 
-      // await minterContract.methods
-      //   .approve(MyNFTMarketContractAddress.MyNFTMarket, tokenId)
-      //   .send({ from: defaultAccount });
-
       const auctionPrice = ethers.utils.parseUnits(String(price), "ether");
-      console.log(auctionPrice);
 
       await marketContract.methods
         .listToken(MyNFTContractAddress.MyNFT, tokenId, auctionPrice)
@@ -54,18 +56,6 @@ export const createNft = async (
   });
 };
 
-export const uploadToIpfs = async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  try {
-    const added = await client.add(file, {
-      progress: (prog) => console.log(`received: ${prog}`),
-    });
-    return `https://ipfs.infura.io/ipfs/${added.path}`;
-  } catch (error) {
-    console.log("Error uploading file: ", error);
-  }
-};
 
 export const getNfts = async (minterContract, marketContract) => {
   try {
